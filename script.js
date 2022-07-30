@@ -3,6 +3,7 @@ const navLinks = document.querySelectorAll(".nav-link");
 const main = document.querySelector(".main");
 const second = document.querySelector(".second");
 const rotateBtn = document.querySelector(".rotate");
+const answerDisplays = document.querySelectorAll("span");
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -39,15 +40,22 @@ function getAnswers(practiceMode) {
     if (practiceMode === "ROW") {
       answers.push((Math.floor(Math.random() * 8) + 1).toString());
     } else if (practiceMode === "COLUMN") {
-      answers.push(String.fromCharCode(Math.floor(Math.random() * 8) + 64));
+      answers.push(String.fromCharCode(Math.floor(Math.random() * 8) + 65));
     } else {
       answers.push(
-        String.fromCharCode(Math.floor(Math.random() * 8) + 64) +
+        String.fromCharCode(Math.floor(Math.random() * 8) + 65) +
           (Math.floor(Math.random() * 8) + 1).toString()
       );
     }
   }
   return answers;
+}
+function nextRound() {
+  answerList = getAnswers(practiceMode);
+  answer = answerList[Math.floor(Math.random() * 4) + 1];
+  answerDisplays.forEach((display, index) => {
+    display.textContent = answerList[index];
+  });
 }
 
 /* -------------------- main ------------------- */
@@ -85,10 +93,12 @@ rotateBtn.addEventListener("click", () => {
   chessboard.render(90);
 });
 
-// need to add a section to initialize
+// initializes
+nextRound();
+// add functionality to highlight chess board
 
 navLinks.forEach(function (link) {
-  link.addEventListener("click", function (e) {
+  link.addEventListener("click", function(e) {
     e.preventDefault();
 
     // toggles active
@@ -105,12 +115,26 @@ navLinks.forEach(function (link) {
       main.classList.remove("d-none");
       second.classList.add("d-none");
     }
-    // put main start up code here
-    // get answers
-    // pick random answer
 
+    practiceMode = this.textContent;
+    nextRound();
+    // add functionality to highlight chessboard
   });
 });
 
 // section for when user clicks a possible answer
 // display right or wrong on canvas for when user answers
+answerDisplays.forEach(display => {
+  display.addEventListener("click", function() {
+    // if correct do this
+    if (this.textContent === answer) {
+      // display something for being correct
+      alert("correct");
+      nextRound();
+    } else {
+      // display something for being wrong
+      alert("incorrect");
+      nextRound();
+    }
+  });
+});
