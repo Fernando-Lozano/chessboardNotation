@@ -13,6 +13,9 @@ const rect = canvas.getBoundingClientRect();
 let lastActive = navLinks[0]; // main nav links on the top screen
 const padding = 20; // padding around the chess board
 let rotate = 0;
+let practiceMode = "ROW";
+let answerList = [];
+let answer;
 
 /* -------------------- fix for high res displays ------------------- */
 function fixHighRes() {
@@ -29,29 +32,25 @@ function fixHighRes() {
 }
 fixHighRes();
 
+/* -------------------- helpers ------------------- */
+function getAnswers(practiceMode) {
+  let answers = [];
+  for (let i = 0; i < 4; i++) {
+    if (practiceMode === "ROW") {
+      answers.push((Math.floor(Math.random() * 8) + 1).toString());
+    } else if (practiceMode === "COLUMN") {
+      answers.push(String.fromCharCode(Math.floor(Math.random() * 8) + 64));
+    } else {
+      answers.push(
+        String.fromCharCode(Math.floor(Math.random() * 8) + 64) +
+          (Math.floor(Math.random() * 8) + 1).toString()
+      );
+    }
+  }
+  return answers;
+}
 
 /* -------------------- main ------------------- */
-navLinks.forEach(function (link) {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    // toggles active
-    lastActive.classList.toggle("active");
-    lastActive.classList.toggle("text-secondary");
-    this.classList.toggle("active");
-    this.classList.toggle("text-secondary");
-    lastActive = this;
-
-    if (link.childNodes[0].textContent === "ABOUT") {
-      main.classList.add("d-none");
-      second.classList.remove("d-none");
-    } else {
-      main.classList.remove("d-none");
-      second.classList.add("d-none");
-    }
-  });
-});
-
 class Chessboard {
   constructor({ img, width, height, rotate = 0 }) {
     this.img = img;
@@ -85,3 +84,33 @@ chessboard.img.src = "./images/chessboard.png"; // Set source path
 rotateBtn.addEventListener("click", () => {
   chessboard.render(90);
 });
+
+// need to add a section to initialize
+
+navLinks.forEach(function (link) {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    // toggles active
+    lastActive.classList.toggle("active");
+    lastActive.classList.toggle("text-secondary");
+    this.classList.toggle("active");
+    this.classList.toggle("text-secondary");
+    lastActive = this;
+
+    if (link.childNodes[0].textContent === "ABOUT") {
+      main.classList.add("d-none");
+      second.classList.remove("d-none");
+    } else {
+      main.classList.remove("d-none");
+      second.classList.add("d-none");
+    }
+    // put main start up code here
+    // get answers
+    // pick random answer
+
+  });
+});
+
+// section for when user clicks a possible answer
+// display right or wrong on canvas for when user answers
