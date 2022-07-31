@@ -13,7 +13,6 @@ const rect = canvas.getBoundingClientRect();
 
 let lastActive = navLinks[0]; // main nav links on the top screen
 const padding = 20; // padding around the chess board
-let rotate = 0;
 let practiceMode = "ROW";
 let answerList = [];
 let answer;
@@ -52,12 +51,34 @@ function getAnswers(practiceMode) {
 }
 function nextRound() {
   answerList = getAnswers(practiceMode);
-  answer = answerList[Math.floor(Math.random() * 4) + 1];
+  answer = answerList[Math.floor(Math.random() * 4)];
   answerDisplays.forEach((display, index) => {
     display.textContent = answerList[index];
   });
 }
-
+function highlightAnswer(answer, practiceMode) {
+  let squareSize = chessboard.width / 8;
+  let x, y, width, height;
+  if (practiceMode === "ROW") {
+    x = 0;
+    y = chessboard.height - squareSize * Number(answer);
+    width = chessboard.width;
+    height = squareSize;
+  } else if (practiceMode === "COLUMN") {
+    x = squareSize * Number(answer.charCodeAt(0) - 65);
+    y = 0;
+    width = squareSize;
+    height = chessboard.width;
+  } else {
+    x = squareSize * Number(answer.charCodeAt(0) - 65);
+    y = chessboard.height - squareSize * Number(answer[1]);
+    console.log(x, y)
+    width = squareSize;
+    height = squareSize;
+  }
+  ctx.fillStyle = "rgba(121, 30, 148, 0.8)";
+  ctx.fillRect(x + padding, y + padding, width, height);
+}
 /* -------------------- main ------------------- */
 class Chessboard {
   constructor({ img, width, height, rotate = 0 }) {
@@ -83,7 +104,8 @@ const chessboard = new Chessboard({
 chessboard.img.addEventListener(
   "load",
   function () {
-    chessboard.render(rotate);
+    chessboard.render();
+    highlightAnswer(answer, practiceMode);
   },
   false
 );
@@ -91,11 +113,11 @@ chessboard.img.src = "./images/chessboard.png"; // Set source path
 
 rotateBtn.addEventListener("click", () => {
   chessboard.render(90);
+  highlightAnswer(answer, practiceMode);
 });
 
 // initializes
 nextRound();
-// add functionality to highlight chess board
 
 navLinks.forEach(function (link) {
   link.addEventListener("click", function(e) {
@@ -118,7 +140,8 @@ navLinks.forEach(function (link) {
 
     practiceMode = this.textContent;
     nextRound();
-    // add functionality to highlight chessboard
+    chessboard.render();
+    highlightAnswer(answer, practiceMode);
   });
 });
 
@@ -131,10 +154,14 @@ answerDisplays.forEach(display => {
       // display something for being correct
       alert("correct");
       nextRound();
+      chessboard.render();
+      highlightAnswer(answer, practiceMode);
     } else {
       // display something for being wrong
       alert("incorrect");
       nextRound();
+      chessboard.render();
+      highlightAnswer(answer, practiceMode);
     }
   });
 });
