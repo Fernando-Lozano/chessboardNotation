@@ -4,11 +4,11 @@ Add an about tab and remove description.
 When the chessboard is rotated the highlighted square or column needs to be redrawn somehow
 
 Tasks:
-  make possible answers into buttons instead of spans
-  add correct and incorrect animations
+  remove all unecessarry classes
 
 Log:
 main layout is done
 board rotates
 commented procedure of coding
 functioning
+added correct/incorrect indicators
