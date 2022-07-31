@@ -13,7 +13,7 @@ const rect = canvas.getBoundingClientRect();
 
 let lastActive = navLinks[0]; // main nav links on the top screen
 const padding = 20; // padding around the chess board
-let practiceMode = "COLUMN"; // mode that the web page starts off with
+let practiceMode = "COLUMNS"; // mode that the web page starts off with
 let answerList = [];
 let answer;
 const timeout = 500; // length of time the correct and incorrect answer are indicated
@@ -99,9 +99,9 @@ fixHighRes();
 function getAnswers(practiceMode) {
   let answers = [];
   for (let i = 0; i < 4; i++) {
-    if (practiceMode === "ROW") {
+    if (practiceMode === "ROWS") {
       answers.push((Math.floor(Math.random() * 8) + 1).toString());
-    } else if (practiceMode === "COLUMN") {
+    } else if (practiceMode === "COLUMNS") {
       answers.push(String.fromCharCode(Math.floor(Math.random() * 8) + 65));
     } else {
       answers.push(
@@ -122,12 +122,12 @@ function nextRound() {
 function highlightAnswer(answer, practiceMode) {
   let squareSize = chessboard.width / 8;
   let x, y, width, height;
-  if (practiceMode === "ROW") {
+  if (practiceMode === "ROWS") {
     x = 0;
     y = chessboard.height - squareSize * Number(answer);
     width = chessboard.width;
     height = squareSize;
-  } else if (practiceMode === "COLUMN") {
+  } else if (practiceMode === "COLUMNS") {
     x = squareSize * Number(answer.charCodeAt(0) - 65);
     y = 0;
     width = squareSize;
