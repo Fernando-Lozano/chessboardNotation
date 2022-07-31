@@ -1,9 +1,9 @@
 /* -------------------- variables ------------------- */
 const navLinks = document.querySelectorAll(".nav-link");
 const main = document.querySelector(".main");
-const second = document.querySelector(".second");
-const rotateBtn = document.querySelector(".rotate");
-const answerDisplays = document.querySelectorAll(".answerBtns");
+const about = document.querySelector(".about");
+const rotateBtn = document.querySelector(".rotateBtn");
+const answerBtns = document.querySelectorAll(".answerBtns");
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -13,9 +13,10 @@ const rect = canvas.getBoundingClientRect();
 
 let lastActive = navLinks[0]; // main nav links on the top screen
 const padding = 20; // padding around the chess board
-let practiceMode = "ROW";
+let practiceMode = "COLUMN"; // mode that the web page starts off with
 let answerList = [];
 let answer;
+const timeout = 500; // length of time the correct and incorrect answer are indicated
 
 /* -------------------- fix for high res displays ------------------- */
 function fixHighRes() {
@@ -52,7 +53,7 @@ function getAnswers(practiceMode) {
 function nextRound() {
   answerList = getAnswers(practiceMode);
   answer = answerList[Math.floor(Math.random() * 4)];
-  answerDisplays.forEach((display, index) => {
+  answerBtns.forEach((display, index) => {
     display.textContent = answerList[index];
   });
 }
@@ -78,6 +79,13 @@ function highlightAnswer(answer, practiceMode) {
   }
   ctx.fillStyle = "rgba(121, 30, 148, 0.8)";
   ctx.fillRect(x + padding, y + padding, width, height);
+}
+function delay(timeout) {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res();
+    }, timeout);
+  });
 }
 /* -------------------- main ------------------- */
 class Chessboard {
@@ -132,10 +140,10 @@ navLinks.forEach(function (link) {
 
     if (link.childNodes[0].textContent === "ABOUT") {
       main.classList.add("d-none");
-      second.classList.remove("d-none");
+      about.classList.remove("d-none");
     } else {
       main.classList.remove("d-none");
-      second.classList.add("d-none");
+      about.classList.add("d-none");
     }
 
     practiceMode = this.textContent;
@@ -145,20 +153,19 @@ navLinks.forEach(function (link) {
   });
 });
 
-// section for when user clicks a possible answer
-// display right or wrong on canvas for when user answers
-answerDisplays.forEach(display => {
-  display.addEventListener("click", function() {
-    // if correct do this
-    if (this.textContent === answer) {
-      // display something for being correct
-      alert("correct");
+answerBtns.forEach(display => {
+  display.addEventListener("click", async function() {
+    if (this.textContent === answer) { // if correct answer
+      this.classList.add("correct");
+      await delay(timeout);
+      this.classList.remove("correct")
       nextRound();
       chessboard.render();
       highlightAnswer(answer, practiceMode);
-    } else {
-      // display something for being wrong
-      alert("incorrect");
+    } else { // if incorrect answer
+      this.classList.add("incorrect");
+      await delay(timeout);
+      this.classList.remove("incorrect");
       nextRound();
       chessboard.render();
       highlightAnswer(answer, practiceMode);
