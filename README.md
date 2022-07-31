@@ -1,14 +1,3 @@
-Notes:
-I want the rotating animation to first shrink, rotate, and the expand back out so that the chessboard isn't cut off.
-Add an about tab and remove description.
-When the chessboard is rotated the highlighted square or column needs to be redrawn somehow
+# Master the Chessboard
 
-Tasks:
-  remove all unecessarry classes
-
-Log:
-main layout is done
-board rotates
-commented procedure of coding
-functioning
-added correct/incorrect indicators
+[Master the Chessboard](https://fernando-lozano.github.io/chessboardNotation/) helps you to memorize the chessboard notation by focusing on learning the rows and columns individually before practicing each individual square.

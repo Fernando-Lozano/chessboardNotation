@@ -2,7 +2,7 @@
 const navLinks = document.querySelectorAll(".nav-link");
 const main = document.querySelector(".main");
 const about = document.querySelector(".about");
-const rotateBtn = document.querySelector(".rotateBtn");
+const rotateBtn = document.querySelector("#rotateBtn");
 const answerBtns = document.querySelectorAll(".answerBtns");
 
 const canvas = document.querySelector("canvas");
@@ -78,7 +78,6 @@ const sound2 = {
   sample_size: 8,
 };
 const correctSound = sfxr.toAudio(sound1);
-console.dir(correctSound)
 const incorrectSound = sfxr.toAudio(sound2);
 
 /* -------------------- fix for high res displays ------------------- */
@@ -136,7 +135,6 @@ function highlightAnswer(answer, practiceMode) {
   } else {
     x = squareSize * Number(answer.charCodeAt(0) - 65);
     y = chessboard.height - squareSize * Number(answer[1]);
-    console.log(x, y)
     width = squareSize;
     height = squareSize;
   }
@@ -180,7 +178,7 @@ chessboard.img.addEventListener(
   },
   false
 );
-chessboard.img.src = "./images/chessboard.png"; // Set source path
+chessboard.img.src = "./chessboard.png"; // Set source path
 
 rotateBtn.addEventListener("click", () => {
   chessboard.render(90);
