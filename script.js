@@ -3,7 +3,7 @@ const navLinks = document.querySelectorAll(".nav-link");
 const main = document.querySelector(".main");
 const second = document.querySelector(".second");
 const rotateBtn = document.querySelector(".rotate");
-const answerDisplays = document.querySelectorAll("span");
+const answerDisplays = document.querySelectorAll(".answerBtns");
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");

@@ -28,17 +28,20 @@
       .second {
         max-width: 600px;
       }
-      .rotate {
-        width: 56px;
-        height: 56px;
-        font-size: 2rem;
-      }
       .btn-primary {
         --bs-btn-color: black;
          --bs-btn-hover-color: black;
         --bs-btn-bg: #EDEED2;
         --bs-btn-hover-bg: #769655;
         border: none;
+      }
+      .rotate {
+        font-size: 1.5rem;
+      }
+      .answerBtns {
+        font-size: 1.75rem;
+        width: 60px;
+        height: 60px;
       }
       span {
         font-size: 3rem;
@@ -66,9 +69,9 @@
 </ul>
 
 <div class="main justify-content-center align-items-center d-flex flex-column">
-  <canvas class="my-3"></canvas>
+  <canvas class="mt-3"></canvas>
   <button class="rotate btn btn-primary"><i class="bi bi-arrow-counterclockwise"></i></button>
-  <div class="mt-4"><span class="m-4"></span><span class="m-4"></span><span class="m-4"></span><span class="m-4"></span></div>
+  <div class="mt-4"><button class="m-3 btn btn-primary answerBtns"></button><button class="m-3 btn btn-primary answerBtns"></button><button class="m-3 btn btn-primary answerBtns"></button><button class="m-3 btn btn-primary answerBtns"></button></div>
 </div>
 
 <div class="second container d-flex d-row justify-content-center d-none">
