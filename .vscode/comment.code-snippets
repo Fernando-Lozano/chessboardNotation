@@ -1,7 +1,0 @@
-{
-  "sectionComment": {
-    "scope": "javascript,html",
-    "prefix": "sec",
-    "body": "$BLOCK_COMMENT_START -------------------- $0 ------------------- $BLOCK_COMMENT_END"
-  }
-}
